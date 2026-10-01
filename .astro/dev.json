@@ -1,0 +1,18 @@
+{
+	"pid": 28536,
+	"port": 8443,
+	"url": "http://localhost:8443",
+	"urls": {
+		"local": [
+			"http://localhost:8443/"
+		],
+		"network": [
+			"http://192.168.15.230:8443/"
+		],
+		"networkInterfaceNames": [
+			"Wi-Fi"
+		]
+	},
+	"background": false,
+	"startedAt": "2026-10-01T14:56:00.298Z"
+}

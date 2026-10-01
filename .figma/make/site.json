@@ -1,0 +1,11 @@
+{
+  "title": "Criam Ascensori",
+  "description": "Experience a modern, user-friendly platform for Crima Ascensori, offering seamless access to elevator installation, maintenance, and emergency services.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

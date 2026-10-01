@@ -1,0 +1,36 @@
+---
+import SiteChromeEnd from "../components/SiteChromeEnd.astro";
+import SiteChromeStart from "../components/SiteChromeStart.astro";
+import "../index.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "CRIAM Ascensori | Installazione e manutenzione ascensori a Roma",
+  description = "CRIAM progetta, installa e mantiene ascensori e soluzioni per l'elevazione a Roma.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#151819" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body data-pathname={Astro.url.pathname}>
+    <SiteChromeStart />
+    <main id="main" class="lg:mr-[86px]">
+      <slot />
+    </main>
+    <SiteChromeEnd />
+    <script>
+      import "../scripts/interactions";
+    </script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+---
+import About from "../components/pages/About.astro";
+import Careers from "../components/pages/Careers.astro";
+import Contact from "../components/pages/Contact.astro";
+import DesignSystem from "../components/pages/DesignSystem.astro";
+import Home from "../components/pages/Home.astro";
+import Privacy from "../components/pages/Privacy.astro";
+import Product from "../components/pages/Product.astro";
+import Projects from "../components/pages/Projects.astro";
+import ServiceEmergency from "../components/pages/ServiceEmergency.astro";
+import ServiceMaintenance from "../components/pages/ServiceMaintenance.astro";
+import ServiceModernization from "../components/pages/ServiceModernization.astro";
+import ServiceNew from "../components/pages/ServiceNew.astro";
+import AppShell from "../layouts/AppShell.astro";
+
+export function getStaticPaths() {
+  return [
+    undefined,
+    "contatti",
+    "prodotti/ascensore-panoramico",
+    "servizi/nuovi-impianti",
+    "servizi/manutenzione",
+    "servizi/ammodernamento",
+    "servizi/pronto-intervento",
+    "chi-siamo",
+    "progetti",
+    "lavora-con-noi",
+    "privacy",
+    "design-system",
+  ].map((path) => ({ params: { path } }));
+}
+
+const titles: Record<string, string> = {
+  "": "CRIAM Ascensori | Installazione e manutenzione ascensori a Roma",
+  contatti: "Contatti e preventivi | CRIAM Ascensori Roma",
+  "prodotti/ascensore-panoramico":
+    "Ascensori panoramici su misura | CRIAM Ascensori",
+  "servizi/nuovi-impianti": "Nuovi impianti | CRIAM Ascensori Roma",
+  "servizi/manutenzione": "Manutenzione ascensori | CRIAM Roma",
+  "servizi/ammodernamento": "Ammodernamento ascensori | CRIAM Roma",
+  "servizi/pronto-intervento": "Pronto intervento ascensori | CRIAM Roma",
+  "chi-siamo": "Chi siamo | CRIAM Ascensori Roma",
+  progetti: "Progetti e soluzioni | CRIAM Ascensori",
+  "lavora-con-noi": "Lavora con noi | CRIAM Ascensori",
+  privacy: "Privacy e cookie | CRIAM Ascensori",
+  "design-system": "Design system | CRIAM Ascensori",
+};
+
+const path = Astro.params.path ?? "";
+
+const pages = {
+  "": Home,
+  contatti: Contact,
+  "prodotti/ascensore-panoramico": Product,
+  "servizi/nuovi-impianti": ServiceNew,
+  "servizi/manutenzione": ServiceMaintenance,
+  "servizi/ammodernamento": ServiceModernization,
+  "servizi/pronto-intervento": ServiceEmergency,
+  "chi-siamo": About,
+  progetti: Projects,
+  "lavora-con-noi": Careers,
+  privacy: Privacy,
+  "design-system": DesignSystem,
+};
+
+const Page = pages[path as keyof typeof pages];
+---
+
+<AppShell title={titles[path]}>
+  <Page />
+</AppShell>
