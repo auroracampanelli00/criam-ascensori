@@ -2,9 +2,7 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  base: process.env.FIGMA_PUBLIC_URL
-    ? `${process.env.FIGMA_PUBLIC_URL}/`
-    : "/",
+  base: process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : "/",
   vite: {
     plugins: [tailwindcss()],
     server: {

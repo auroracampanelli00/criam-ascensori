@@ -3,16 +3,47 @@
 @import "./styles/theme.css";
 
 @layer base {
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--font-sans); background: var(--background); color: var(--foreground); }
-  button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
-  button:not(:disabled), a { cursor: pointer; }
-  :focus-visible { outline: 2px solid #d9a95d; outline-offset: 5px; }
-  ::selection { background: #d9a95d; color: #16191b; }
-  dialog::backdrop { background: #080b0dd9; backdrop-filter: blur(8px); }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--background);
+    color: var(--foreground);
+  }
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:not(:disabled),
+  a {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid #d9a95d;
+    outline-offset: 5px;
+  }
+  ::selection {
+    background: #d9a95d;
+    color: #16191b;
+  }
+  dialog::backdrop {
+    background: #080b0dd9;
+    backdrop-filter: blur(8px);
+  }
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 

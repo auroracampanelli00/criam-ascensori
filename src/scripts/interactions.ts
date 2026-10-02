@@ -67,9 +67,9 @@ function ding(): void {
   }
 }
 
-const doorOverlay = Array.from(document.querySelectorAll<HTMLElement>("body > div")).find(
-  (element) => element.textContent?.includes("Salta animazione"),
-);
+const doorOverlay = Array.from(
+  document.querySelectorAll<HTMLElement>("body > div"),
+).find((element) => element.textContent?.includes("Salta animazione"));
 const doorPanels = Array.from(
   doorOverlay?.querySelectorAll<HTMLElement>(":scope > div") ?? [],
 ).slice(0, 2);
@@ -156,7 +156,9 @@ floorDialog?.addEventListener("click", (event) => {
 });
 
 const audioButtons = Array.from(
-  document.querySelectorAll<HTMLButtonElement>('[aria-label*="audio"], dialog button[aria-pressed]'),
+  document.querySelectorAll<HTMLButtonElement>(
+    '[aria-label*="audio"], dialog button[aria-pressed]',
+  ),
 );
 function updateAudioButtons(): void {
   audioButtons.forEach((button) => {
@@ -201,7 +203,10 @@ function activeFloor(): number {
 function updateFloorPanel(): void {
   const active = activeFloor();
   [...floorButtons, ...mobileFloorButtons].forEach((button, index) => {
-    button.setAttribute("aria-current", index === active ? "location" : "false");
+    button.setAttribute(
+      "aria-current",
+      index === active ? "location" : "false",
+    );
     button.classList.toggle("border-primary", index === active);
     button.classList.toggle("bg-primary/10", index === active);
     button.classList.toggle("text-primary", index === active);
@@ -211,9 +216,12 @@ function updateFloorPanel(): void {
   const progress =
     window.scrollY /
     Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  const track = floorPanel?.querySelector<HTMLElement>('div[aria-hidden="true"]');
+  const track = floorPanel?.querySelector<HTMLElement>(
+    'div[aria-hidden="true"]',
+  );
   const indicator = track?.firstElementChild;
-  if (indicator instanceof HTMLElement) indicator.style.top = `${progress * 85}%`;
+  if (indicator instanceof HTMLElement)
+    indicator.style.top = `${progress * 85}%`;
   previousScroll = window.scrollY;
 }
 function onScroll(): void {
@@ -239,7 +247,9 @@ if (heroImage && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
 }
 
 document
-  .querySelectorAll<HTMLElement>('[aria-label="24/7"], [aria-label="360°"], [aria-label="01"]')
+  .querySelectorAll<HTMLElement>(
+    '[aria-label="24/7"], [aria-label="360°"], [aria-label="01"]',
+  )
   .forEach((metric) => {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const target = metric.getAttribute("aria-label") ?? "";
@@ -255,7 +265,9 @@ document
         const tick = (now: number) => {
           const progress = Math.min((now - start) / 850, 1);
           const count = Math.round(value * (1 - Math.pow(1 - progress, 3)));
-          output.textContent = `${target === "01" ? String(count).padStart(2, "0") : count}${suffix}`;
+          output.textContent = `${
+            target === "01" ? String(count).padStart(2, "0") : count
+          }${suffix}`;
           if (progress < 1) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
@@ -271,28 +283,44 @@ const products = [
     tag: "CONDOMINI · EDIFICI PUBBLICI",
     image: "/images/elevator-interior.jpg",
     text: "Tecnologia e design, allo stesso livello. Soluzioni elettriche e oleodinamiche progettate intorno al tuo edificio.",
-    features: ["Progettazione su misura", "Finiture personalizzabili", "Comfort di viaggio"],
+    features: [
+      "Progettazione su misura",
+      "Finiture personalizzabili",
+      "Comfort di viaggio",
+    ],
   },
   {
     name: "Elevatori panoramici",
     tag: "ARCHITETTURA · HOTEL",
     image: "/images/elevator-hero.jpg",
     text: "Un nuovo punto di vista sul movimento. Vetro, luce e strutture metalliche che dialogano con l’architettura.",
-    features: ["Cabine vetrate", "Integrazione architettonica", "Torri metalliche"],
+    features: [
+      "Cabine vetrate",
+      "Integrazione architettonica",
+      "Torri metalliche",
+    ],
   },
   {
     name: "Montacarichi",
     tag: "AZIENDE · RISTORAZIONE",
     image: "/images/atrium.jpg",
     text: "Il lavoro si muove meglio. Elevatori di servizio e portavivande per ristoranti, supermercati e attività commerciali.",
-    features: ["Soluzioni per merci", "Dimensionamento dedicato", "Affidabilità operativa"],
+    features: [
+      "Soluzioni per merci",
+      "Dimensionamento dedicato",
+      "Affidabilità operativa",
+    ],
   },
   {
     name: "Montascale",
     tag: "CASA · ACCESSIBILITÀ",
     image: "/images/architecture.jpg",
     text: "Ogni spazio, di nuovo accessibile. Soluzioni per superare le scale e rendere più semplici i movimenti di ogni giorno.",
-    features: ["Studio del percorso", "Per ambienti esistenti", "Accessibilità quotidiana"],
+    features: [
+      "Studio del percorso",
+      "Per ambienti esistenti",
+      "Accessibilità quotidiana",
+    ],
   },
 ] as const;
 
@@ -312,13 +340,16 @@ function selectProduct(index: number, focus = false): void {
     button.classList.toggle("text-primary", selected);
     button.classList.toggle("text-white/55", !selected);
   });
-  productSection?.querySelector<HTMLElement>(".max-w-\\[330px\\]")?.replaceChildren(document.createTextNode(product.text));
+  productSection
+    ?.querySelector<HTMLElement>(".max-w-\\[330px\\]")
+    ?.replaceChildren(document.createTextNode(product.text));
   const image = productPanel.querySelector<HTMLImageElement>("img");
   if (image) {
     image.src = product.image;
     image.alt = `Immagine architettonica illustrativa per ${product.name.toLowerCase()}`;
   }
-  const labels = productPanel.querySelectorAll<HTMLElement>(":scope > span, h3");
+  const labels =
+    productPanel.querySelectorAll<HTMLElement>(":scope > span, h3");
   if (labels[0]) labels[0].textContent = product.tag;
   if (labels[1]) labels[1].textContent = product.name;
   const features = productPanel.querySelector<HTMLElement>(".flex.flex-wrap");
@@ -335,7 +366,9 @@ function selectProduct(index: number, focus = false): void {
 productTabs.forEach((button, index) => {
   button.addEventListener("click", () => selectProduct(index));
   button.addEventListener("keydown", (event) => {
-    if (!["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"].includes(event.key))
+    if (
+      !["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"].includes(event.key)
+    )
       return;
     event.preventDefault();
     const next =
@@ -372,8 +405,9 @@ const projectData = [
 ] as const;
 const projectsSection = document.getElementById("progetti");
 const projectCards = Array.from(
-  projectsSection?.querySelectorAll<HTMLButtonElement>(".grid.gap-7 > button") ??
-    [],
+  projectsSection?.querySelectorAll<HTMLButtonElement>(
+    ".grid.gap-7 > button",
+  ) ?? [],
 );
 const filterButtons = Array.from(
   projectsSection?.querySelectorAll<HTMLButtonElement>(
@@ -431,7 +465,8 @@ projectCards.forEach((card, index) =>
         const value = (event.currentTarget as HTMLInputElement).value;
         const after = content.querySelector<HTMLElement>("[data-after]");
         const divider = content.querySelector<HTMLElement>("[data-divider]");
-        if (after) after.style.clipPath = `inset(0 0 ${100 - Number(value)}% 0)`;
+        if (after)
+          after.style.clipPath = `inset(0 0 ${100 - Number(value)}% 0)`;
         if (divider) divider.style.top = `${value}%`;
       });
     projectDialog.showModal();
@@ -442,9 +477,7 @@ projectDialog
   ?.addEventListener("click", () => projectDialog.close());
 
 const finishButtons = Array.from(
-  document.querySelectorAll<HTMLButtonElement>(
-    "button[aria-pressed]",
-  ),
+  document.querySelectorAll<HTMLButtonElement>("button[aria-pressed]"),
 ).filter((button) =>
   ["Acciaio satinato", "Grafite", "Bronzo"].includes(
     button.textContent?.trim() ?? "",
@@ -511,7 +544,9 @@ detailTabs.forEach((button, index) => {
         ? 0
         : event.key === "End"
           ? detailTabs.length - 1
-          : (index + (event.key === "ArrowRight" ? 1 : -1) + detailTabs.length) %
+          : (index +
+              (event.key === "ArrowRight" ? 1 : -1) +
+              detailTabs.length) %
             detailTabs.length;
     selectDetail(next, true);
   });
@@ -542,8 +577,7 @@ faqButtons.forEach((button, index) =>
     if (!panel) {
       panel = document.createElement("p");
       panel.id = id;
-      panel.className =
-        "pb-6 text-[13px] leading-7 text-muted-foreground";
+      panel.className = "pb-6 text-[13px] leading-7 text-muted-foreground";
       panel.textContent = faqAnswers[index] ?? "";
       button.after(panel);
     }
@@ -591,9 +625,19 @@ if (quoteForm) {
       .map(
         (label, index) => `
         <div class="flex flex-1 items-center">
-          <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border font-mono text-[10px] ${index <= state.step ? "border-primary text-primary" : "border-white/25 text-white/55"}">${index < state.step ? "✓" : index + 1}</span>
-          <span class="ml-2 hidden text-[10px] min-[380px]:inline ${index <= state.step ? "text-white" : "text-white/55"}">${label}</span>
-          ${index < 2 ? '<span class="mx-3 h-px flex-1 bg-white/15"></span>' : ""}
+          <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border font-mono text-[10px] ${
+            index <= state.step
+              ? "border-primary text-primary"
+              : "border-white/25 text-white/55"
+          }">${index < state.step ? "✓" : index + 1}</span>
+          <span class="ml-2 hidden text-[10px] min-[380px]:inline ${
+            index <= state.step ? "text-white" : "text-white/55"
+          }">${label}</span>
+          ${
+            index < 2
+              ? '<span class="mx-3 h-px flex-1 bg-white/15"></span>'
+              : ""
+          }
         </div>`,
       )
       .join("")}</div>`;
@@ -614,19 +658,35 @@ if (quoteForm) {
         <div class="grid grid-cols-2 gap-3">${buildings
           .map(
             (item, index) =>
-              `<button type="button" data-building="${escapeHtml(item)}" aria-pressed="${state.building === item}" class="flex min-h-26.5 flex-col items-start justify-between border p-4 text-left text-xs transition-colors ${state.building === item ? "border-primary bg-primary/5 text-primary" : "border-white/15 text-white/75 hover:border-white/40"}"><span class="font-mono text-[9px]">0${index + 1}</span>${item}</button>`,
+              `<button type="button" data-building="${escapeHtml(item)}" aria-pressed="${state.building === item}" class="flex min-h-26.5 flex-col items-start justify-between border p-4 text-left text-xs transition-colors ${
+                state.building === item
+                  ? "border-primary bg-primary/5 text-primary"
+                  : "border-white/15 text-white/75 hover:border-white/40"
+              }"><span class="font-mono text-[9px]">0${index + 1}</span>${item}</button>`,
           )
           .join("")}</div>
-        <button type="button" data-next class="${buttonClass} mt-6 w-full disabled:cursor-not-allowed disabled:opacity-35" ${state.building ? "" : "disabled"}>Sali al prossimo piano →</button>`;
+        <button type="button" data-next class="${buttonClass} mt-6 w-full disabled:cursor-not-allowed disabled:opacity-35" ${
+          state.building ? "" : "disabled"
+        }>Sali al prossimo piano →</button>`;
     if (state.step === 1)
       content = `
         <div class="space-y-2">${interventions
           .map(
             (item) =>
-              `<button type="button" data-intervention="${escapeHtml(item)}" aria-pressed="${state.intervention === item}" class="flex w-full items-center justify-between border px-4 py-3 text-left text-xs transition-colors ${state.intervention === item ? "border-primary bg-primary/5 text-primary" : "border-white/15 text-white/70 hover:border-white/40"}">${item}<span class="h-4 w-4 rounded-full border ${state.intervention === item ? "border-primary bg-primary" : "border-white/30"}"></span></button>`,
+              `<button type="button" data-intervention="${escapeHtml(item)}" aria-pressed="${state.intervention === item}" class="flex w-full items-center justify-between border px-4 py-3 text-left text-xs transition-colors ${
+                state.intervention === item
+                  ? "border-primary bg-primary/5 text-primary"
+                  : "border-white/15 text-white/70 hover:border-white/40"
+              }">${item}<span class="h-4 w-4 rounded-full border ${
+                state.intervention === item
+                  ? "border-primary bg-primary"
+                  : "border-white/30"
+              }"></span></button>`,
           )
           .join("")}</div>
-        <div class="mt-6 flex items-center gap-4"><button type="button" data-back class="p-3 text-white/60" aria-label="Torna alla scelta dell’edificio">←</button><button type="button" data-next class="${buttonClass} flex-1 disabled:cursor-not-allowed disabled:opacity-35" ${state.intervention ? "" : "disabled"}>Un ultimo piano →</button></div>`;
+        <div class="mt-6 flex items-center gap-4"><button type="button" data-back class="p-3 text-white/60" aria-label="Torna alla scelta dell’edificio">←</button><button type="button" data-next class="${buttonClass} flex-1 disabled:cursor-not-allowed disabled:opacity-35" ${
+          state.intervention ? "" : "disabled"
+        }>Un ultimo piano →</button></div>`;
     if (state.step === 2)
       content = `
         <form class="space-y-4">
@@ -641,13 +701,14 @@ if (quoteForm) {
           <p class="text-[9px] leading-5 text-white/55">Invio tramite il tuo programma email. Nessun dato viene salvato sul sito.</p>
         </form>`;
     quoteForm.innerHTML = `${renderProgress()}<h3 tabindex="-1" class="font-display text-[25px] leading-tight outline-none">${titles[state.step]}</h3><p class="mb-6 mt-2 text-[11px] leading-6 text-muted-foreground">${descriptions[state.step]}</p>${content}<div class="mt-6 flex items-center gap-2 border-t border-border pt-5 text-[10px] text-white/55">◇ Preventivo gratuito. Nessun impegno.</div>`;
-    quoteForm.querySelectorAll<HTMLButtonElement>("[data-building]").forEach(
-      (button) =>
+    quoteForm
+      .querySelectorAll<HTMLButtonElement>("[data-building]")
+      .forEach((button) =>
         button.addEventListener("click", () => {
           state.building = button.dataset.building ?? "";
           render();
         }),
-    );
+      );
     quoteForm
       .querySelectorAll<HTMLButtonElement>("[data-intervention]")
       .forEach((button) =>
@@ -693,9 +754,7 @@ if (quoteForm) {
 if (window.location.hash)
   window.setTimeout(
     () =>
-      document
-        .getElementById(window.location.hash.slice(1))
-        ?.scrollIntoView(),
+      document.getElementById(window.location.hash.slice(1))?.scrollIntoView(),
     80,
   );
 
